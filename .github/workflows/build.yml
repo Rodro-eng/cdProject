@@ -13,6 +13,8 @@ on:
       - main
     paths-ignore:
       - '*.md'
+  workflow_dispatch:
+
 
 jobs:
   build:
