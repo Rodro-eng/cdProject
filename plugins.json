@@ -1,0 +1,105 @@
+[
+    {
+        "iconUrl": "https://raw.githubusercontent.com/Rodro-eng/cdProject/master/icons/arlivest.png",
+        "fileHash": "sha256-8bf5b95b9951608f8a631079eb87d8a84f5417ca29b09395f35b8fb0686e30bd",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Rodro-eng/cdProject",
+        "fileSize": 11612,
+        "status": 1,
+        "language": "es",
+        "authors": [
+            "Rodro-eng"
+        ],
+        "tvTypes": [
+            "Live"
+        ],
+        "version": 1,
+        "internalName": "ARLiveST",
+        "description": "Argentine Live TV - 300+ channels from DirecTV, Flow, Telecentro, Antina & more",
+        "url": "https://raw.githubusercontent.com/Rodro-eng/cdProject/builds/ARLiveST.cs3",
+        "name": "ARLiveST"
+    },
+    {
+        "iconUrl": "https://raw.githubusercontent.com/Rodro-eng/cdProject/master/icons/doracartoon.png",
+        "fileHash": "sha256-11b7f07cbf72b45f94b4e228bd2a66bf4c524de8c1540602bfddf3e6d5850904",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Rodro-eng/cdProject",
+        "fileSize": 14648,
+        "status": 1,
+        "language": "hi",
+        "authors": [
+            "Rodro-eng"
+        ],
+        "tvTypes": [
+            "Cartoon",
+            "AnimeMovie"
+        ],
+        "version": 1,
+        "internalName": "DoraCartoon",
+        "description": "Watch Doraemon episodes and movies in Hindi dubbed from DoraBash",
+        "url": "https://raw.githubusercontent.com/Rodro-eng/cdProject/builds/DoraCartoon.cs3",
+        "name": "DoraCartoon"
+    },
+    {
+        "iconUrl": "https://www.google.com/s2/favicons?domain=example.com&sz=%size%",
+        "fileHash": "sha256-06344c04f7b8a3e3cd727bac366dcd067331c0fff37ceed08ad1e3c7ec4e35e3",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Rodro-eng/cdProject",
+        "fileSize": 2973,
+        "status": 1,
+        "language": "en",
+        "authors": [
+            "Cloudburst",
+            "Luna712"
+        ],
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "version": 1,
+        "internalName": "ExampleProvider",
+        "description": "Lorem ipsum",
+        "url": "https://raw.githubusercontent.com/Rodro-eng/cdProject/builds/ExampleProvider.cs3",
+        "name": "ExampleProvider"
+    },
+    {
+        "iconUrl": "https://raw.githubusercontent.com/Rodro-eng/cdProject/master/icons/lowspeed.png",
+        "fileHash": "sha256-7b35427264cba060ff8e4cead5d0c25538cfd1895b9b27517605e86b0c27048d",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Rodro-eng/cdProject",
+        "fileSize": 11566,
+        "status": 1,
+        "language": "bn",
+        "authors": [
+            "Rodro-eng"
+        ],
+        "tvTypes": [
+            "Live"
+        ],
+        "version": 1,
+        "internalName": "LowSpeed",
+        "description": "Live TV channels from M3U playlist - Sports, Entertainment, Movies, Cartoon, Bangladesh TV, News, Documentary & Music",
+        "url": "https://raw.githubusercontent.com/Rodro-eng/cdProject/builds/LowSpeed.cs3",
+        "name": "LowSpeed"
+    },
+    {
+        "iconUrl": "https://raw.githubusercontent.com/Rodro-eng/cdProject/master/icons/skystream.png",
+        "fileHash": "sha256-cb0557932a4ce02d2860317894211fa2af977a938f90cf55787f1f4cafb22797",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Rodro-eng/cdProject",
+        "fileSize": 11585,
+        "status": 1,
+        "language": "hi",
+        "authors": [
+            "Rodro-eng"
+        ],
+        "tvTypes": [
+            "Live"
+        ],
+        "version": 1,
+        "internalName": "SkyStream",
+        "description": "Indian Live TV - 500+ channels across Sports, Entertainment, Movies, News, Kids, Music, Devotional & more",
+        "url": "https://raw.githubusercontent.com/Rodro-eng/cdProject/builds/SkyStream.cs3",
+        "name": "SkyStream"
+    }
+]
