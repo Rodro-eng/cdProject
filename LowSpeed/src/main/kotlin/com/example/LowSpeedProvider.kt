@@ -166,7 +166,7 @@ class LowSpeedProvider : MainAPI() {
         val channelName = channel?.name ?: "LowSpeed"
 
         callback.invoke(
-            ExtractorLink(
+            com.lagradost.cloudstream3.utils.newExtractorLink(
                 source = this.name,
                 name = channelName,
                 url = data,
