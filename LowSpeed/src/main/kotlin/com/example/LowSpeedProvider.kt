@@ -172,7 +172,6 @@ class LowSpeedProvider : MainAPI() {
                 url = data,
             ) {
                 this.quality = Qualities.Unknown.value
-                this.isM3u8 = data.contains(".m3u8") || data.contains(".ts")
             }
         )
 
