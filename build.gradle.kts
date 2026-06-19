@@ -86,6 +86,6 @@ subprojects {
         // CloudStream will use this url to update plugins.
         // Format: raw.githubusercontent.com/{YOUR_GITHUB_USERNAME}/{REPO_NAME}/{builds_branch}
         // Example: raw.githubusercontent.com/YourUsername/TestPlugins/builds
-        setRepo("raw.githubusercontent.com/Rodro-eng/TestPlugins/builds")
+        setRepo("raw.githubusercontent.com/Rodro-eng/cdProject/builds")
     }
 }
