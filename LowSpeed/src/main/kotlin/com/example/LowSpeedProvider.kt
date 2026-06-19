@@ -170,10 +170,10 @@ class LowSpeedProvider : MainAPI() {
                 source = this.name,
                 name = channelName,
                 url = data,
-                referer = "",
-                quality = Qualities.Unknown.value,
-                isM3u8 = data.contains(".m3u8") || data.contains(".ts"),
-            )
+            ) {
+                this.quality = Qualities.Unknown.value
+                this.isM3u8 = data.contains(".m3u8") || data.contains(".ts")
+            }
         )
 
         return true
