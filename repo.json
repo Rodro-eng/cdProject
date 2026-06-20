@@ -1,0 +1,8 @@
+{
+    "name": "LowSpeed Repository",
+    "description": "Live TV extensions for CloudStream",
+    "manifestVersion": 1,
+    "pluginLists": [
+        "https://raw.githubusercontent.com/Rodro-eng/cdProject/builds/plugins.json"
+    ]
+}
