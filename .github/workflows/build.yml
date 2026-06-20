@@ -4,7 +4,6 @@ concurrency:
   group: "build"
   cancel-in-progress: true
 
-# Allow the workflow to force-push built artifacts to the `builds` branch.
 permissions:
   contents: write
 
@@ -42,16 +41,6 @@ jobs:
         with:
           java-version: 17
           distribution: temurin
-
-      - name: Cache Gradle & jitpack artifacts
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: gradle-${{ runner.os }}-${{ hashFiles('src/**/*.gradle*', 'src/gradle/wrapper/gradle-wrapper.properties') }}
-          restore-keys: |
-            gradle-${{ runner.os }}-
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v2
