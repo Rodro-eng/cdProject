@@ -96,11 +96,10 @@ class DoraCartoonProvider : MainAPI() {
             val epNum = Regex("""episode-?(\d+)""", RegexOption.IGNORE_CASE).find(epHref)?.groupValues?.get(1)?.toIntOrNull()
                 ?: Regex("""(\d+)""").find(epTitle)?.groupValues?.get(1)?.toIntOrNull()
 
-            Episode(
-                data = epHref,
-                name = epTitle,
-                episode = epNum
-            )
+            newEpisode(epHref) {
+                this.name = epTitle
+                this.episode = epNum
+            }
         }.reversed()
 
         return if (episodes.size <= 1 && url.contains("movie")) {
@@ -141,7 +140,45 @@ class DoraCartoonProvider : MainAPI() {
         for (iframe in iframes) {
             val iframeSrc = iframe.attr("data-src").ifBlank { iframe.attr("src") }
             if (iframeSrc.isNotBlank()) {
-                loadExtractor(iframeSrc, data, subtitleCallback, callback)
+                // Fetch the iframe page and look for video sources inside
+                try {
+                    val iframeDoc = app.get(iframeSrc, referer = data).document
+                    val iframeVideos = iframeDoc.select("video source[src], video[src]")
+                    for (v in iframeVideos) {
+                        val vSrc = v.attr("src")
+                        if (vSrc.isNotBlank()) {
+                            callback.invoke(
+                                com.lagradost.cloudstream3.utils.newExtractorLink(
+                                    source = this.name,
+                                    name = this.name,
+                                    url = vSrc,
+                                ) {
+                                    this.quality = Qualities.Unknown.value
+                                }
+                            )
+                        }
+                    }
+                    // Also check for m3u8/mp4 in iframe scripts
+                    val iframeScripts = iframeDoc.select("script")
+                    for (s in iframeScripts) {
+                        val sData = s.data()
+                        val urlRegex2 = Regex("""["']([^"']+\.(?:m3u8|mp4)[^"']*)["']""")
+                        urlRegex2.findAll(sData).forEach { match ->
+                            val vUrl = match.groupValues[1]
+                            if (vUrl.startsWith("http")) {
+                                callback.invoke(
+                                    com.lagradost.cloudstream3.utils.newExtractorLink(
+                                        source = this.name,
+                                        name = this.name,
+                                        url = vUrl,
+                                    ) {
+                                        this.quality = Qualities.Unknown.value
+                                    }
+                                )
+                            }
+                        }
+                    }
+                } catch (_: Exception) { }
             }
         }
 
