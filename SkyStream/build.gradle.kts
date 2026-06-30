@@ -11,7 +11,7 @@ cloudstream {
         "Live",
     )
 
-    iconUrl = "https://www.google.com/s2/favicons?domain=go.skym3u.top&sz=%size%"
+    iconUrl = "https://raw.githubusercontent.com/Rodro-eng/cdProject/master/icons/skystream.png"
 
     language = "hi"
 }

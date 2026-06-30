@@ -11,7 +11,7 @@ cloudstream {
         "AnimeMovie",
     )
 
-    iconUrl = "https://www.google.com/s2/favicons?domain=dorabash.in&sz=%size%"
+    iconUrl = "https://raw.githubusercontent.com/Rodro-eng/cdProject/master/icons/doracartoon.png"
 
     language = "hi"
 }

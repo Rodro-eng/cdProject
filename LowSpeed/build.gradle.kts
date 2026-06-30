@@ -21,7 +21,7 @@ cloudstream {
         "Live",
     )
 
-    iconUrl = "https://imglink.cc/cdn/kIiut6WBq0.jpg"
+    iconUrl = "https://raw.githubusercontent.com/Rodro-eng/cdProject/master/icons/lowspeed.png"
 
     language = "bn"
 }
