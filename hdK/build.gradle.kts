@@ -8,7 +8,7 @@ cloudstream {
 
     tvTypes = listOf(
         "Movie",
-        "NSFW",
+        "TvSeries",
     )
 
     iconUrl = "https://raw.githubusercontent.com/Rodro-eng/cdProject/master/icons/hdk.png"

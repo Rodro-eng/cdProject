@@ -7,7 +7,7 @@ import org.jsoup.nodes.Element
 class HdKProvider : MainAPI() {
     override var mainUrl = "https://tellyhd.help"
     override var name = "hdK"
-    override val supportedTypes = setOf(TvType.Movie, TvType.NSFW)
+    override val supportedTypes = setOf(TvType.Movie, TvType.TvSeries)
     override var lang = "hi"
     override val hasMainPage = true
     override val hasDownloadSupport = true
@@ -55,7 +55,7 @@ class HdKProvider : MainAPI() {
             it.attr("data-src").ifBlank { it.attr("src") }
         }
 
-        return newMovieSearchResponse(title, href, TvType.NSFW) {
+        return newMovieSearchResponse(title, href, TvType.Movie) {
             this.posterUrl = posterUrl
         }
     }
@@ -74,7 +74,7 @@ class HdKProvider : MainAPI() {
                 it.attr("data-src").ifBlank { it.attr("src") }
             }
 
-            newMovieSearchResponse(title, href, TvType.NSFW) {
+            newMovieSearchResponse(title, href, TvType.Movie) {
                 this.posterUrl = posterUrl
             }
         }
@@ -103,7 +103,7 @@ class HdKProvider : MainAPI() {
         return newMovieLoadResponse(
             name = title,
             url = url,
-            type = TvType.NSFW,
+            type = TvType.Movie,
             dataUrl = dataUrl
         ) {
             this.posterUrl = poster
