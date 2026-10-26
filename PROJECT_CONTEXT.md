@@ -130,7 +130,7 @@ The CI/CD pipeline:
 > [!WARNING]
 > - The `builds` branch is **auto-managed** — do NOT manually edit it.
 > - `actions/checkout@master` is used (not `@v4`) because `@v4` currently targets Node.js 20 which triggers deprecation warnings.
-> - `android-actions/setup-android@v2` is used for the same reason.
+> - `android-actions/setup-android@v3` is used (v2 fails due to deprecated 'tools' package).
 
 ### 3.4 `settings.gradle.kts`
 
