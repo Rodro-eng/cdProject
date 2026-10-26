@@ -163,6 +163,18 @@ Auto-discovers all extension modules. Any directory with a `build.gradle.kts` is
 
 Placeholder extension from the CloudStream template. All methods throw `TODO()`. Not functional but compiles successfully.
 
+### 4.4 skyView Extension
+
+| Property | Value |
+|----------|-------|
+| **Base URL** | `http://30.30.30.30/` |
+| **Language** | Bengali (`bn`) |
+| **Categories** | Sports, Bangla, Hindi, English, Kids & Music (Others) |
+| **Channels** | Live Sports, T Sports, GTV, Star Sports, Sony Sports, Zee Bangla, Star Jalsha, Independent TV, Somoy TV, Star Plus, Sony Max, Discovery, etc. |
+| **Stream Server** | Flussonic HLS Server (`:8088/{streamId}/index.m3u8`) with token resolver |
+| **Files** | `skyView/src/main/kotlin/com/example/SkyViewPlugin.kt`, `SkyViewProvider.kt` |
+
+
 ---
 
 ## 5. How to Add a New Extension
