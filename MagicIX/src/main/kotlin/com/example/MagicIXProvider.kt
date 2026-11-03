@@ -10,7 +10,6 @@ class MagicIXProvider : MainAPI() {
     override var lang = "en"
     override val hasMainPage = true
     override val hasDownloadSupport = false
-    override val hasSearch = true
 
     override val mainPage = mainPageOf(
         "movies|||filter_movies"     to "Latest Movies",
