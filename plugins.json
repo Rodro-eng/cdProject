@@ -124,6 +124,28 @@
         "name": "LowSpeed"
     },
     {
+        "iconUrl": "https://raw.githubusercontent.com/Rodro-eng/cdProject/master/icons/magicix.png",
+        "fileHash": "sha256-e072f11fd73e361a91061656bae9be2ce4c124522907e09966515abb200662e2",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Rodro-eng/cdProject",
+        "fileSize": 14136,
+        "status": 1,
+        "language": "en",
+        "authors": [
+            "Rodro-eng"
+        ],
+        "tvTypes": [
+            "Movie",
+            "TvSeries",
+            "Live"
+        ],
+        "version": 1,
+        "internalName": "MagicIX",
+        "description": "MagicIX - Movies, TV Series & Live TV from Moviemazic",
+        "url": "https://raw.githubusercontent.com/Rodro-eng/cdProject/builds/MagicIX.cs3",
+        "name": "MagicIX"
+    },
+    {
         "iconUrl": "https://raw.githubusercontent.com/Rodro-eng/cdProject/master/icons/skystream.png",
         "fileHash": "sha256-cb0557932a4ce02d2860317894211fa2af977a938f90cf55787f1f4cafb22797",
         "apiVersion": 1,
