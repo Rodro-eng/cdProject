@@ -174,6 +174,18 @@ Placeholder extension from the CloudStream template. All methods throw `TODO()`.
 | **Stream Server** | Flussonic HLS Server (`:8088/{streamId}/index.m3u8`) with token resolver |
 | **Files** | `skyView/src/main/kotlin/com/example/SkyViewPlugin.kt`, `SkyViewProvider.kt` |
 
+### 4.5 MagicIX Extension
+
+| Property | Value |
+|----------|-------|
+| **Base URL** | `http://moviemazic.xyz/` |
+| **Language** | English (`en`) |
+| **TvTypes** | `Movie`, `TvSeries`, `Live` |
+| **Features** | Latest Movies (paginated API), Latest TV Series (paginated API with episode selector), Live TV channels |
+| **Stream Extraction** | Parses `OvooVideojs.mount` player configs for direct M3U8/MP4 CDN streams (`cdn.moviemazic.xyz:8083`) |
+| **Files** | `MagicIX/src/main/kotlin/com/example/MagicIXPlugin.kt`, `MagicIXProvider.kt` |
+
+
 
 ---
 
@@ -233,6 +245,8 @@ Placeholder extension from the CloudStream template. All methods throw `TODO()`.
 | `plugins.json 404` | Repo must be **public** for raw GitHub URLs to work |
 | `CloudStream can't find plugins` | Must have `repo.json` manifest pointing to `plugins.json` |
 | `gradlew --posix error` | Use a proper Gradle wrapper script, not a custom one |
+| `recloudstream:gradle:-SNAPSHOT not found` | In `build.gradle.kts`, use `com.github.recloudstream:gradle:master-SNAPSHOT` |
+| `'hasSearch' overrides nothing` | Do not declare `override val hasSearch`; search is implemented via `override suspend fun search(...)` |
 
 ---
 
