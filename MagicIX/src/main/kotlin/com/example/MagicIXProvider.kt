@@ -13,7 +13,7 @@ class MagicIXProvider : MainAPI() {
     override val hasSearch = true
 
     // ─────────────────────────────────────────────────────────────
-    // Main page sections  (data = "category|||endpoint" or "livetv")
+    // Main page sections  (data = "category|||endpoint")
     // ─────────────────────────────────────────────────────────────
     override val mainPage = mainPageOf(
         "movies|||filter_movies"     to "Latest Movies",
@@ -33,13 +33,15 @@ class MagicIXProvider : MainAPI() {
     }
 
     // ─────────────────────────────────────────────────────────────
-    // Helpers: parse product cards from JSON-escaped HTML
+    // Parse product cards from JSON-escaped HTML
+    // The API returns HTML where attributes are backslash-escaped: href=\"URL\"
     // ─────────────────────────────────────────────────────────────
     private fun parseProductCards(html: String, tvType: TvType): List<SearchResponse> {
         val results = mutableListOf<SearchResponse>()
-        // The API returns JSON where the HTML is backslash-escaped, e.g. href=\"URL\"
+        // Use escaped-quote pattern \\\" inside a normal (non-triple-quoted) string
         val productRegex = Regex(
-            """href=\\"(https?://moviemazic\.xyz/watch/[^"\\]+)\\">\s*<img[^>]+src=\\"([^"\\]+)\\"[^>]+alt=\\"([^"\\]+)\\""""
+            "href=\\\\\"(https?://moviemazic\\.xyz/watch/[^\"\\\\]+)\\\\\">" +
+            "\\s*<img[^>]+src=\\\\\"([^\"\\\\]+)\\\\\"[^>]+alt=\\\\\"([^\"\\\\]+)\\\\\""
         )
         productRegex.findAll(html).forEach { m ->
             val url    = m.groupValues[1].replace("\\/", "/")
@@ -65,9 +67,11 @@ class MagicIXProvider : MainAPI() {
             data = mapOf("action" to "fetch_data", "sort" to "desc")
         ).text
 
-        // JSON has: "movie_list":"<escaped html>","pagination_link":"..."
-        // Use a non-greedy match; avoid ending on literal " inside triple-quote by using \u0022
-        val movieListRegex = Regex("""\"movie_list\":\"(.*?)\",\"pagination_link\"""", RegexOption.DOT_MATCHES_ALL)
+        // JSON field: "movie_list":"<escaped html>","pagination_link":"..."
+        val movieListRegex = Regex(
+            "\"movie_list\":\"(.*?)\",\"pagination_link\":",
+            RegexOption.DOT_MATCHES_ALL
+        )
         val rawHtml = movieListRegex.find(response)?.groupValues?.get(1) ?: ""
 
         val items   = parseProductCards(rawHtml, tvType)
@@ -84,7 +88,8 @@ class MagicIXProvider : MainAPI() {
         val results = mutableListOf<SearchResponse>()
 
         val channelRegex = Regex(
-            """href="(https?://moviemazic\.xyz/live-tv/[^"]+)"[^>]*>\s*<img[^>]+src="([^"]+)"[^>]+alt="([^"]+)""""
+            "href=\"(https?://moviemazic\\.xyz/live-tv/[^\"]+)\"[^>]*>" +
+            "\\s*<img[^>]+src=\"([^\"]+)\"[^>]+alt=\"([^\"]+)\""
         )
         channelRegex.findAll(html).forEach { m ->
             val url    = m.groupValues[1]
@@ -113,7 +118,8 @@ class MagicIXProvider : MainAPI() {
         val results = mutableListOf<SearchResponse>()
 
         val productRegex = Regex(
-            """<div class="product mb-4"[^>]*>[\s\S]*?href="([^"]+)"[^>]*>\s*<img[^>]+src="([^"]+)"[^>]+alt="([^"]+)""""
+            "<div class=\"product mb-4\"[^>]*>[\\s\\S]*?" +
+            "href=\"([^\"]+)\"[^>]*>\\s*<img[^>]+src=\"([^\"]+)\"[^>]+alt=\"([^\"]+)\""
         )
         productRegex.findAll(html).forEach { m ->
             val url    = m.groupValues[1]
@@ -137,15 +143,17 @@ class MagicIXProvider : MainAPI() {
         val isTv   = url.contains("-tv.html")
         val html   = app.get(url).text
 
-        val titleRaw = Regex("""<title>(.*?)</title>""", RegexOption.DOT_MATCHES_ALL)
+        val titleRaw = Regex("<title>(.*?)</title>", RegexOption.DOT_MATCHES_ALL)
             .find(html)?.groupValues?.get(1)?.trim() ?: name
         val title = titleRaw.replace(" - Moviemazic", "").trim()
 
-        val posterMatch = Regex("""uploads/poster_image/([^"?]+)""").find(html)
+        val posterMatch = Regex("uploads/poster_image/([^\"?]+)").find(html)
         val poster = posterMatch?.let { "$mainUrl/uploads/poster_image/${it.groupValues[1]}" }
 
-        val plotMatch = Regex("""<div[^>]*class="[^"]*description[^"]*"[^>]*>([\s\S]*?)</div>""", RegexOption.IGNORE_CASE)
-            .find(html)
+        val plotMatch = Regex(
+            "<div[^>]*class=\"[^\"]*description[^\"]*\"[^>]*>([\\s\\S]*?)</div>",
+            RegexOption.IGNORE_CASE
+        ).find(html)
         val plot = plotMatch?.groupValues?.get(1)?.replace(Regex("<[^>]+>"), "")?.trim()
 
         // --- Live TV ---
@@ -159,22 +167,23 @@ class MagicIXProvider : MainAPI() {
 
         // --- TV Series ---
         if (isTv) {
-            val episodes = mutableListOf<Episode>()
+            val episodes   = mutableListOf<Episode>()
             val escapedUrl = Regex.escape(url)
             val epRegex = Regex(
-                """href="($escapedUrl[^"]*key=[^"]+)"[^>]*>[\s\S]*?alt="([^"]+)""""
+                "href=\"($escapedUrl[^\"]*key=[^\"]+)\"[^>]*>[\\s\\S]*?alt=\"([^\"]+)\""
             )
             var epNum = 1
             epRegex.findAll(html).forEach { m ->
                 val epUrl   = m.groupValues[1]
                 val epTitle = m.groupValues[2]
-                val epPosterMatch = Regex("""src="([^"]+episodes/[^"]+)"""").find(m.value)
+                val epPoster = Regex("src=\"([^\"]+episodes/[^\"]+)\"").find(m.value)
+                    ?.groupValues?.get(1)
                 episodes.add(
                     newEpisode(epUrl) {
                         this.name      = epTitle
                         this.episode   = epNum++
                         this.season    = 1
-                        this.posterUrl = epPosterMatch?.groupValues?.get(1)
+                        this.posterUrl = epPoster
                     }
                 )
             }
@@ -188,7 +197,7 @@ class MagicIXProvider : MainAPI() {
         val streamUrl   = extractOvooSource(html)
         val serverLinks = mutableListOf<String>()
         if (streamUrl != null) serverLinks.add(streamUrl)
-        Regex("""href="($mainUrl/watch/[^"]+\?key=[^"]+)"""").findAll(html).forEach {
+        Regex("href=\"($mainUrl/watch/[^\"]+\\?key=[^\"]+)\"").findAll(html).forEach {
             serverLinks.add(it.groupValues[1])
         }
 
@@ -249,12 +258,14 @@ class MagicIXProvider : MainAPI() {
     }
 
     // ─────────────────────────────────────────────────────────────
-    // Helper: extract stream URL from OvooVideojs.mount({...})
+    // Extract stream URL from OvooVideojs.mount({...})
     // ─────────────────────────────────────────────────────────────
     private fun extractOvooSource(html: String): String? {
-        val mountJson = Regex("""OvooVideojs\.mount\((\{.*?\})\)""", RegexOption.DOT_MATCHES_ALL)
-            .find(html)?.groupValues?.get(1) ?: return null
-        return Regex(""""source":"([^"]+)"""").find(mountJson)
+        val mountJson = Regex(
+            "OvooVideojs\\.mount\\((\\{.*?\\})\\)",
+            RegexOption.DOT_MATCHES_ALL
+        ).find(html)?.groupValues?.get(1) ?: return null
+        return Regex("\"source\":\"([^\"]+)\"").find(mountJson)
             ?.groupValues?.get(1)?.replace("\\/", "/")
     }
 }
