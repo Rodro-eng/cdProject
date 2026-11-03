@@ -63,6 +63,26 @@
         "name": "ExampleProvider"
     },
     {
+        "iconUrl": "https://raw.githubusercontent.com/Rodro-eng/cdProject/master/icons/forceix.png",
+        "fileHash": "sha256-9c7c2c30be236bd4be85f1cd196e260af423e1603165f5abe22c38def751e8d2",
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/Rodro-eng/cdProject",
+        "fileSize": 12173,
+        "status": 1,
+        "language": "bn",
+        "authors": [
+            "Rodro-eng"
+        ],
+        "tvTypes": [
+            "Live"
+        ],
+        "version": 1,
+        "internalName": "ForceIX",
+        "description": "ForceIX - Red Force TV Live Channels (Bangla, Sports, Hindi, English, Kids, Islamic)",
+        "url": "https://raw.githubusercontent.com/Rodro-eng/cdProject/builds/ForceIX.cs3",
+        "name": "ForceIX"
+    },
+    {
         "iconUrl": "https://raw.githubusercontent.com/Rodro-eng/cdProject/master/icons/hdk.png",
         "fileHash": "sha256-eb0e88d465752004fcdb7c9fea27e15cdd7c3676ef355ee9d009d8a8236ff6d5",
         "apiVersion": 1,

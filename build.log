@@ -31,26 +31,31 @@ To suppress this warning, add/update
     android.suppressUnsupportedCompileSdk=36
 to this project's gradle.properties.
 
-> Task :hdK:checkKotlinGradlePluginConfigurationErrors SKIPPED
-> Task :ExampleProvider:checkKotlinGradlePluginConfigurationErrors SKIPPED
-> Task :ARLiveST:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :ForceIX:checkKotlinGradlePluginConfigurationErrors SKIPPED
 > Task :DoraCartoon:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :ARLiveST:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :ExampleProvider:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :ForceIX:preBuild UP-TO-DATE
 > Task :ARLiveST:preBuild UP-TO-DATE
-> Task :ExampleProvider:preBuild UP-TO-DATE
+> Task :ForceIX:preDebugBuild UP-TO-DATE
+> Task :DoraCartoon:preBuild UP-TO-DATE
 > Task :ARLiveST:preDebugBuild UP-TO-DATE
+> Task :DoraCartoon:preDebugBuild UP-TO-DATE
+> Task :ExampleProvider:preBuild UP-TO-DATE
 > Task :ExampleProvider:preDebugBuild UP-TO-DATE
+> Task :ARLiveST:generateDebugResValues
+> Task :ForceIX:generateDebugResValues
+> Task :ExampleProvider:generateDebugResValues
+> Task :DoraCartoon:generateDebugResValues
+> Task :ARLiveST:generateDebugResources
+> Task :ExampleProvider:generateDebugResources
+> Task :ForceIX:generateDebugResources
+> Task :DoraCartoon:generateDebugResources
+> Task :hdK:checkKotlinGradlePluginConfigurationErrors SKIPPED
 > Task :hdK:preBuild UP-TO-DATE
 > Task :hdK:preDebugBuild UP-TO-DATE
-> Task :DoraCartoon:preBuild UP-TO-DATE
-> Task :DoraCartoon:preDebugBuild UP-TO-DATE
-> Task :ExampleProvider:generateDebugResValues
-> Task :ARLiveST:generateDebugResValues
 > Task :hdK:generateDebugResValues
-> Task :DoraCartoon:generateDebugResValues
-> Task :DoraCartoon:generateDebugResources
-> Task :ARLiveST:generateDebugResources
 > Task :hdK:generateDebugResources
-> Task :ExampleProvider:generateDebugResources
 > Task :lala:checkKotlinGradlePluginConfigurationErrors SKIPPED
 > Task :lala:preBuild UP-TO-DATE
 > Task :lala:preDebugBuild UP-TO-DATE
@@ -65,75 +70,75 @@ to this project's gradle.properties.
 > Task :MagicIX:preBuild UP-TO-DATE
 > Task :MagicIX:preDebugBuild UP-TO-DATE
 > Task :MagicIX:generateDebugResValues
-> Task :hdK:packageDebugResources
-> Task :ARLiveST:packageDebugResources
-> Task :DoraCartoon:packageDebugResources
 > Task :MagicIX:generateDebugResources
+> Task :SkyStream:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :SkyStream:preBuild UP-TO-DATE
 > Task :ExampleProvider:packageDebugResources
+> Task :SkyStream:preDebugBuild UP-TO-DATE
+> Task :ARLiveST:packageDebugResources
+> Task :ForceIX:packageDebugResources
+> Task :SkyStream:generateDebugResValues
+> Task :DoraCartoon:packageDebugResources
 > Task :ARLiveST:parseDebugLocalResources
 > Task :ExampleProvider:parseDebugLocalResources
-> Task :hdK:parseDebugLocalResources
+> Task :ForceIX:parseDebugLocalResources
 > Task :DoraCartoon:parseDebugLocalResources
+> Task :ForceIX:generateDebugRFile
 > Task :ExampleProvider:generateDebugRFile
-> Task :hdK:generateDebugRFile
-> Task :DoraCartoon:generateDebugRFile
 > Task :ARLiveST:generateDebugRFile
-> Task :ExampleProvider:compileDebugKotlin
+> Task :DoraCartoon:generateDebugRFile
 > Task :DoraCartoon:compileDebugKotlin
-> Task :hdK:compileDebugKotlin
+> Task :ExampleProvider:compileDebugKotlin
 > Task :ARLiveST:compileDebugKotlin
+> Task :ForceIX:compileDebugKotlin
 
 > Task :ExampleProvider:compileDex
 Compiled dex to /home/runner/work/cdProject/cdProject/src/ExampleProvider/build/intermediates/classes.dex
 
-> Task :ExampleProvider:generateManifest
-
-> Task :ExampleProvider:make
-Made CloudStream package at /home/runner/work/cdProject/cdProject/src/ExampleProvider/build/ExampleProvider.cs3
-
-> Task :lala:packageDebugResources
-> Task :lala:parseDebugLocalResources
+> Task :ForceIX:compileDex
+Compiled dex to /home/runner/work/cdProject/cdProject/src/ForceIX/build/intermediates/classes.dex
 
 > Task :ARLiveST:compileDex
 Compiled dex to /home/runner/work/cdProject/cdProject/src/ARLiveST/build/intermediates/classes.dex
 
-> Task :lala:generateDebugRFile
 > Task :ARLiveST:generateManifest
-
-> Task :ARLiveST:make
-Made CloudStream package at /home/runner/work/cdProject/cdProject/src/ARLiveST/build/ARLiveST.cs3
-
-> Task :LowSpeed:packageDebugResources
-> Task :LowSpeed:parseDebugLocalResources
-> Task :LowSpeed:generateDebugRFile
+> Task :ForceIX:generateManifest
+> Task :ExampleProvider:generateManifest
 
 > Task :DoraCartoon:compileDex
 Compiled dex to /home/runner/work/cdProject/cdProject/src/DoraCartoon/build/intermediates/classes.dex
 
 > Task :DoraCartoon:generateManifest
 
-> Task :hdK:compileDex
-Compiled dex to /home/runner/work/cdProject/cdProject/src/hdK/build/intermediates/classes.dex
+> Task :ExampleProvider:make
+Made CloudStream package at /home/runner/work/cdProject/cdProject/src/ExampleProvider/build/ExampleProvider.cs3
 
-> Task :hdK:generateManifest
+> Task :ARLiveST:make
+Made CloudStream package at /home/runner/work/cdProject/cdProject/src/ARLiveST/build/ARLiveST.cs3
 
 > Task :DoraCartoon:make
 Made CloudStream package at /home/runner/work/cdProject/cdProject/src/DoraCartoon/build/DoraCartoon.cs3
 
-> Task :hdK:make
-Made CloudStream package at /home/runner/work/cdProject/cdProject/src/hdK/build/hdK.cs3
+> Task :ForceIX:make
+Made CloudStream package at /home/runner/work/cdProject/cdProject/src/ForceIX/build/ForceIX.cs3
 
-> Task :SkyStream:checkKotlinGradlePluginConfigurationErrors SKIPPED
-> Task :SkyStream:preBuild UP-TO-DATE
-> Task :SkyStream:preDebugBuild UP-TO-DATE
-> Task :SkyStream:generateDebugResValues
 > Task :SkyStream:generateDebugResources
+> Task :skyView:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :skyView:preBuild UP-TO-DATE
+> Task :skyView:preDebugBuild UP-TO-DATE
+> Task :hdK:packageDebugResources
+> Task :skyView:generateDebugResValues
+> Task :LowSpeed:packageDebugResources
+> Task :lala:packageDebugResources
+> Task :hdK:parseDebugLocalResources
 > Task :MagicIX:packageDebugResources
+> Task :lala:parseDebugLocalResources
+> Task :LowSpeed:parseDebugLocalResources
+> Task :hdK:generateDebugRFile
 > Task :MagicIX:parseDebugLocalResources
-> Task :SkyStream:packageDebugResources
-> Task :SkyStream:parseDebugLocalResources
+> Task :LowSpeed:generateDebugRFile
+> Task :lala:generateDebugRFile
 > Task :MagicIX:generateDebugRFile
-> Task :SkyStream:generateDebugRFile
 > Task :lala:compileDebugKotlin
 
 > Task :lala:compileDex
@@ -144,17 +149,10 @@ Compiled dex to /home/runner/work/cdProject/cdProject/src/lala/build/intermediat
 > Task :lala:make
 Made CloudStream package at /home/runner/work/cdProject/cdProject/src/lala/build/lala.cs3
 
-> Task :skyView:checkKotlinGradlePluginConfigurationErrors SKIPPED
-> Task :skyView:preBuild UP-TO-DATE
-> Task :skyView:preDebugBuild UP-TO-DATE
-> Task :skyView:generateDebugResValues
-> Task :skyView:generateDebugResources
-> Task :skyView:packageDebugResources
-> Task :skyView:parseDebugLocalResources
-> Task :skyView:generateDebugRFile
-> Task :SkyStream:compileDebugKotlin
+> Task :SkyStream:packageDebugResources
+> Task :SkyStream:parseDebugLocalResources
+> Task :SkyStream:generateDebugRFile
 > Task :LowSpeed:compileDebugKotlin
-> Task :MagicIX:compileDebugKotlin
 
 > Task :LowSpeed:compileDex
 Compiled dex to /home/runner/work/cdProject/cdProject/src/LowSpeed/build/intermediates/classes.dex
@@ -164,21 +162,12 @@ Compiled dex to /home/runner/work/cdProject/cdProject/src/LowSpeed/build/interme
 > Task :LowSpeed:make
 Made CloudStream package at /home/runner/work/cdProject/cdProject/src/LowSpeed/build/LowSpeed.cs3
 
-> Task :SkyStream:compileDex
-Compiled dex to /home/runner/work/cdProject/cdProject/src/SkyStream/build/intermediates/classes.dex
-
-> Task :SkyStream:generateManifest
-
-> Task :SkyStream:make
-Made CloudStream package at /home/runner/work/cdProject/cdProject/src/SkyStream/build/SkyStream.cs3
-
-> Task :DoraCartoon:writeCacheEntry
-> Task :ARLiveST:writeCacheEntry
-> Task :ExampleProvider:writeCacheEntry
-> Task :hdK:writeCacheEntry
-> Task :lala:writeCacheEntry
-> Task :SkyStream:writeCacheEntry
-> Task :LowSpeed:writeCacheEntry
+> Task :skyView:generateDebugResources
+> Task :skyView:packageDebugResources
+> Task :skyView:parseDebugLocalResources
+> Task :skyView:generateDebugRFile
+> Task :MagicIX:compileDebugKotlin
+> Task :hdK:compileDebugKotlin
 
 > Task :MagicIX:compileDex
 Compiled dex to /home/runner/work/cdProject/cdProject/src/MagicIX/build/intermediates/classes.dex
@@ -188,7 +177,33 @@ Compiled dex to /home/runner/work/cdProject/cdProject/src/MagicIX/build/intermed
 > Task :MagicIX:make
 Made CloudStream package at /home/runner/work/cdProject/cdProject/src/MagicIX/build/MagicIX.cs3
 
+> Task :hdK:compileDex
+Compiled dex to /home/runner/work/cdProject/cdProject/src/hdK/build/intermediates/classes.dex
+
+> Task :hdK:generateManifest
+> Task :ARLiveST:writeCacheEntry
+
+> Task :hdK:make
+Made CloudStream package at /home/runner/work/cdProject/cdProject/src/hdK/build/hdK.cs3
+
+> Task :DoraCartoon:writeCacheEntry
+> Task :ForceIX:writeCacheEntry
+> Task :ExampleProvider:writeCacheEntry
+> Task :hdK:writeCacheEntry
+> Task :lala:writeCacheEntry
+> Task :LowSpeed:writeCacheEntry
 > Task :MagicIX:writeCacheEntry
+> Task :SkyStream:compileDebugKotlin
+
+> Task :SkyStream:compileDex
+Compiled dex to /home/runner/work/cdProject/cdProject/src/SkyStream/build/intermediates/classes.dex
+
+> Task :SkyStream:generateManifest
+
+> Task :SkyStream:make
+Made CloudStream package at /home/runner/work/cdProject/cdProject/src/SkyStream/build/SkyStream.cs3
+
+> Task :SkyStream:writeCacheEntry
 > Task :skyView:compileDebugKotlin
 
 > Task :skyView:compileDex
@@ -204,5 +219,5 @@ Made CloudStream package at /home/runner/work/cdProject/cdProject/src/skyView/bu
 > Task :makePluginsJson
 Created /home/runner/work/cdProject/cdProject/src/build/plugins.json
 
-BUILD SUCCESSFUL in 1m 32s
-91 actionable tasks: 91 executed
+BUILD SUCCESSFUL in 1m 11s
+101 actionable tasks: 101 executed
