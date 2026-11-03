@@ -185,6 +185,18 @@ Placeholder extension from the CloudStream template. All methods throw `TODO()`.
 | **Stream Extraction** | Parses `OvooVideojs.mount` player configs for direct M3U8/MP4 CDN streams (`cdn.moviemazic.xyz:8083`) |
 | **Files** | `MagicIX/src/main/kotlin/com/example/MagicIXPlugin.kt`, `MagicIXProvider.kt` |
 
+### 4.6 ForceIX Extension
+
+| Property | Value |
+|----------|-------|
+| **Base URL** | `http://redforce.live/` |
+| **Language** | Bengali (`bn`) |
+| **TvTypes** | `Live` |
+| **Categories** | All Channels (102), Bangla (26), English (24), Hindi (21), Sports (18), Kids (11), Islamic (2) |
+| **Stream Server** | RED FORCE TV streaming server (`:8082/{channel}/index.m3u8?token=...&remote=no_check_ip`) via `player.php?stream={id}` |
+| **Files** | `ForceIX/src/main/kotlin/com/example/ForceIXPlugin.kt`, `ForceIXProvider.kt` |
+
+
 
 
 ---
