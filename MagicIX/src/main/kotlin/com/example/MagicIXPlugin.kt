@@ -10,3 +10,4 @@ class MagicIXPlugin : Plugin() {
         registerMainAPI(MagicIXProvider())
     }
 }
+

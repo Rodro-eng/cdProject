@@ -12,9 +12,6 @@ class MagicIXProvider : MainAPI() {
     override val hasDownloadSupport = false
     override val hasSearch = true
 
-    // ─────────────────────────────────────────────────────────────
-    // Main page sections  (data = "category|||endpoint")
-    // ─────────────────────────────────────────────────────────────
     override val mainPage = mainPageOf(
         "movies|||filter_movies"     to "Latest Movies",
         "tvseries|||filter_tvseries" to "Latest TV Series",
@@ -32,30 +29,6 @@ class MagicIXProvider : MainAPI() {
         }
     }
 
-    // ─────────────────────────────────────────────────────────────
-    // Parse product cards from JSON-escaped HTML
-    // The API returns HTML where attributes are backslash-escaped: href=\"URL\"
-    // ─────────────────────────────────────────────────────────────
-    private fun parseProductCards(html: String, tvType: TvType): List<SearchResponse> {
-        val results = mutableListOf<SearchResponse>()
-        // Use escaped-quote pattern \\\" inside a normal (non-triple-quoted) string
-        val productRegex = Regex(
-            "href=\\\\\"(https?://moviemazic\\.xyz/watch/[^\"\\\\]+)\\\\\">" +
-            "\\s*<img[^>]+src=\\\\\"([^\"\\\\]+)\\\\\"[^>]+alt=\\\\\"([^\"\\\\]+)\\\\\""
-        )
-        productRegex.findAll(html).forEach { m ->
-            val url    = m.groupValues[1].replace("\\/", "/")
-            val poster = m.groupValues[2].replace("\\/", "/")
-            val title  = m.groupValues[3]
-            results.add(
-                newMovieSearchResponse(name = title, url = url, type = tvType) {
-                    this.posterUrl = poster
-                }
-            )
-        }
-        return results
-    }
-
     private suspend fun fetchFilterPage(
         endpoint: String,
         page: Int,
@@ -67,16 +40,27 @@ class MagicIXProvider : MainAPI() {
             data = mapOf("action" to "fetch_data", "sort" to "desc")
         ).text
 
-        // JSON field: "movie_list":"<escaped html>","pagination_link":"..."
+        val items = mutableListOf<SearchResponse>()
         val movieListRegex = Regex(
             "\"movie_list\":\"(.*?)\",\"pagination_link\":",
             RegexOption.DOT_MATCHES_ALL
         )
         val rawHtml = movieListRegex.find(response)?.groupValues?.get(1) ?: ""
 
-        val items   = parseProductCards(rawHtml, tvType)
-        val hasNext = response.contains("data-ci-pagination-page=\\\"${page + 1}\\\"")
+        val productRegex = Regex(
+            "href=\\\\\"(https?://moviemazic\\.xyz/watch/[^\"\\\\]+)\\\\\">" +
+            "\\s*<img[^>]+src=\\\\\"([^\"\\\\]+)\\\\\"[^>]+alt=\\\\\"([^\"\\\\]+)\\\\\""
+        )
+        productRegex.findAll(rawHtml).forEach { m ->
+            val itemUrl    = m.groupValues[1].replace("\\/", "/")
+            val poster = m.groupValues[2].replace("\\/", "/")
+            val title  = m.groupValues[3]
+            items.add(newMovieSearchResponse(name = title, url = itemUrl, type = tvType) {
+                this.posterUrl = poster
+            })
+        }
 
+        val hasNext = response.contains("data-ci-pagination-page=\\\"${page + 1}\\\"")
         return newHomePageResponse(
             list    = HomePageList(name = sectionName, list = items, isHorizontalImages = false),
             hasNext = hasNext
@@ -92,15 +76,13 @@ class MagicIXProvider : MainAPI() {
             "\\s*<img[^>]+src=\"([^\"]+)\"[^>]+alt=\"([^\"]+)\""
         )
         channelRegex.findAll(html).forEach { m ->
-            val url    = m.groupValues[1]
-            val poster = m.groupValues[2]
-            val title  = m.groupValues[3]
-            if (!url.contains("/category/")) {
-                results.add(
-                    newMovieSearchResponse(name = title, url = url, type = TvType.Live) {
-                        this.posterUrl = poster
-                    }
-                )
+            val itemUrl = m.groupValues[1]
+            val poster  = m.groupValues[2]
+            val title   = m.groupValues[3]
+            if (!itemUrl.contains("/category/")) {
+                results.add(newMovieSearchResponse(name = title, url = itemUrl, type = TvType.Live) {
+                    this.posterUrl = poster
+                })
             }
         }
 
@@ -110,9 +92,6 @@ class MagicIXProvider : MainAPI() {
         )
     }
 
-    // ─────────────────────────────────────────────────────────────
-    // Search
-    // ─────────────────────────────────────────────────────────────
     override suspend fun search(query: String): List<SearchResponse> {
         val html    = app.get("$mainUrl/search?q=${query.replace(" ", "+")}").text
         val results = mutableListOf<SearchResponse>()
@@ -122,79 +101,75 @@ class MagicIXProvider : MainAPI() {
             "href=\"([^\"]+)\"[^>]*>\\s*<img[^>]+src=\"([^\"]+)\"[^>]+alt=\"([^\"]+)\""
         )
         productRegex.findAll(html).forEach { m ->
-            val url    = m.groupValues[1]
-            val poster = m.groupValues[2]
-            val title  = m.groupValues[3]
-            val type   = if (url.contains("-tv.html")) TvType.TvSeries else TvType.Movie
-            results.add(
-                newMovieSearchResponse(name = title, url = url, type = type) {
-                    this.posterUrl = poster
-                }
-            )
+            val itemUrl = m.groupValues[1]
+            val poster  = m.groupValues[2]
+            val title   = m.groupValues[3]
+            val type    = if (itemUrl.contains("-tv.html")) TvType.TvSeries else TvType.Movie
+            results.add(newMovieSearchResponse(name = title, url = itemUrl, type = type) {
+                this.posterUrl = poster
+            })
         }
         return results
     }
 
-    // ─────────────────────────────────────────────────────────────
-    // Load: movie, tv series, or live tv detail page
-    // ─────────────────────────────────────────────────────────────
     override suspend fun load(url: String): LoadResponse {
         val isLive = url.contains("/live-tv/")
         val isTv   = url.contains("-tv.html")
         val html   = app.get(url).text
 
-        val titleRaw = Regex("<title>(.*?)</title>", RegexOption.DOT_MATCHES_ALL)
-            .find(html)?.groupValues?.get(1)?.trim() ?: name
-        val title = titleRaw.replace(" - Moviemazic", "").trim()
+        val title = Regex("<title>(.*?)</title>", RegexOption.DOT_MATCHES_ALL)
+            .find(html)?.groupValues?.get(1)?.trim()
+            ?.replace(" - Moviemazic", "")?.trim() ?: name
 
-        val posterMatch = Regex("uploads/poster_image/([^\"?]+)").find(html)
-        val poster = posterMatch?.let { "$mainUrl/uploads/poster_image/${it.groupValues[1]}" }
+        val poster = Regex("uploads/poster_image/([^\"?]+)").find(html)
+            ?.let { "$mainUrl/uploads/poster_image/${it.groupValues[1]}" }
 
-        val plotMatch = Regex(
+        val plot = Regex(
             "<div[^>]*class=\"[^\"]*description[^\"]*\"[^>]*>([\\s\\S]*?)</div>",
             RegexOption.IGNORE_CASE
-        ).find(html)
-        val plot = plotMatch?.groupValues?.get(1)?.replace(Regex("<[^>]+>"), "")?.trim()
+        ).find(html)?.groupValues?.get(1)?.replace(Regex("<[^>]+>"), "")?.trim()
 
-        // --- Live TV ---
+        val streamUrl = extractOvooSource(html)
+
         if (isLive) {
-            val streamUrl = extractOvooSource(html) ?: url
-            return newMovieLoadResponse(name = title, url = url, type = TvType.Live, dataUrl = streamUrl) {
+            return newMovieLoadResponse(
+                name    = title,
+                url     = url,
+                type    = TvType.Live,
+                dataUrl = streamUrl ?: url
+            ) {
                 this.posterUrl = poster
                 this.plot      = plot ?: "Live TV on MagicIX"
             }
         }
 
-        // --- TV Series ---
         if (isTv) {
             val episodes   = mutableListOf<Episode>()
             val escapedUrl = Regex.escape(url)
-            val epRegex = Regex(
-                "href=\"($escapedUrl[^\"]*key=[^\"]+)\"[^>]*>[\\s\\S]*?alt=\"([^\"]+)\""
-            )
+            val epRegex = Regex("href=\"($escapedUrl[^\"]*key=[^\"]+)\"[^>]*>[\\s\\S]*?alt=\"([^\"]+)\"")
             var epNum = 1
             epRegex.findAll(html).forEach { m ->
-                val epUrl   = m.groupValues[1]
-                val epTitle = m.groupValues[2]
-                val epPoster = Regex("src=\"([^\"]+episodes/[^\"]+)\"").find(m.value)
-                    ?.groupValues?.get(1)
-                episodes.add(
-                    newEpisode(epUrl) {
-                        this.name      = epTitle
-                        this.episode   = epNum++
-                        this.season    = 1
-                        this.posterUrl = epPoster
-                    }
-                )
+                val epUrl    = m.groupValues[1]
+                val epTitle  = m.groupValues[2]
+                val epPoster = Regex("src=\"([^\"]+episodes/[^\"]+)\"").find(m.value)?.groupValues?.get(1)
+                episodes.add(newEpisode(epUrl) {
+                    this.name      = epTitle
+                    this.episode   = epNum++
+                    this.season    = 1
+                    this.posterUrl = epPoster
+                })
             }
-            return newTvSeriesLoadResponse(name = title, url = url, type = TvType.TvSeries, episodes = episodes) {
+            return newTvSeriesLoadResponse(
+                name     = title,
+                url      = url,
+                type     = TvType.TvSeries,
+                episodes = episodes
+            ) {
                 this.posterUrl = poster
                 this.plot      = plot
             }
         }
 
-        // --- Movie ---
-        val streamUrl   = extractOvooSource(html)
         val serverLinks = mutableListOf<String>()
         if (streamUrl != null) serverLinks.add(streamUrl)
         Regex("href=\"($mainUrl/watch/[^\"]+\\?key=[^\"]+)\"").findAll(html).forEach {
@@ -212,16 +187,12 @@ class MagicIXProvider : MainAPI() {
         }
     }
 
-    // ─────────────────────────────────────────────────────────────
-    // Load Links: resolve actual stream URL
-    // ─────────────────────────────────────────────────────────────
     override suspend fun loadLinks(
         data: String,
         isCasting: Boolean,
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (com.lagradost.cloudstream3.utils.ExtractorLink) -> Unit
     ): Boolean {
-        // Already a direct stream URL
         if (data.contains(".m3u8") || data.contains(".mp4")) {
             callback.invoke(
                 com.lagradost.cloudstream3.utils.newExtractorLink(
@@ -235,7 +206,6 @@ class MagicIXProvider : MainAPI() {
             return true
         }
 
-        // Page URL — fetch and extract OvooVideojs source
         try {
             val html      = app.get(data).text
             val streamUrl = extractOvooSource(html)
@@ -257,9 +227,6 @@ class MagicIXProvider : MainAPI() {
         return false
     }
 
-    // ─────────────────────────────────────────────────────────────
-    // Extract stream URL from OvooVideojs.mount({...})
-    // ─────────────────────────────────────────────────────────────
     private fun extractOvooSource(html: String): String? {
         val mountJson = Regex(
             "OvooVideojs\\.mount\\((\\{.*?\\})\\)",

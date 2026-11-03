@@ -44,18 +44,20 @@ jobs:
 
       - name: Build Plugins
         run: |
+          set -o pipefail
           cd $GITHUB_WORKSPACE/src
           chmod +x gradlew
-          ./gradlew make makePluginsJson
+          ./gradlew make makePluginsJson 2>&1 | tee $GITHUB_WORKSPACE/builds/build.log
           cp **/build/*.cs3 $GITHUB_WORKSPACE/builds || true
           cp build/plugins.json $GITHUB_WORKSPACE/builds || true
           cp repo.json $GITHUB_WORKSPACE/builds || true
 
       - name: Push builds
+        if: always()
         run: |
           cd $GITHUB_WORKSPACE/builds
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
           git add .
-          git commit --amend -m "Build $GITHUB_SHA" || exit 0
+          git commit -m "Build $GITHUB_SHA" || exit 0
           git push --force
